@@ -16,7 +16,9 @@ export const AppRouter: React.FC = () => {
       <Route exact path={paths.error} component={()=><div>Error</div>} />
       <Route exact path={paths.general.notFound} component={()=><div>Not found</div>} />
       <Route exact path={paths.general.styleSamples} component={()=><div>Style</div>} />
-      <Route exact path={paths.general.validate} component={()=><div>Validate</div>} />   
+      <Route exact path={paths.general.validate} component={()=><div>Validate</div>} />
+
+        
       <Sidebar headerName="Vehículos">
       <Route exact path={paths.vehicles.default} component={Vehicles} />
       <Route exact path={paths.vehicles.create} component={CreateVehicle} />
@@ -25,7 +27,7 @@ export const AppRouter: React.FC = () => {
       </Sidebar>
       <Sidebar headerName="Home">
       <Route exact path={paths.general.home} component={()=><div>Home</div>} />
-      </Sidebar>
+      </Sidebar>  
     </AppSwitch>
     </BrowserRouter>
   )

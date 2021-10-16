@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useHistory } from "react-router-dom";
 //"placa" : "ABC-123", "categoria" : "M1", "usuario" : "SINNENS", "unidad" : "Combi", "anho" : "2010" 
 const dataSource = [
     {
@@ -62,6 +63,7 @@ type TypeVehicles={
 }
 export const Vehicles: React.FC = () => {
   const [vehicles,setVehicles]=useState<Array<TypeVehicles>>([])
+  const history = useHistory();
 
   useEffect(()=>{
     axios.get<Array<TypeVehicles> >(`https://quiet-eyrie-82714.herokuapp.com/api/vehicles`)
@@ -70,10 +72,14 @@ export const Vehicles: React.FC = () => {
       setVehicles( getVehicles.map((element,index)=>({...element,key:`vehicles-list-item-${index}`}) ) );
     })
   },[]);
+
+  function newVehicle() {
+    history.push("/vehicles/create");
+  }
   return (
     <>
     <StyledUpperButtons>
-    <Button type="primary">Nuevo Vehiculo</Button>
+    <Button type="primary" onClick={newVehicle}>Nuevo Vehiculo</Button>
     </StyledUpperButtons>
     <Table rowSelection={{type:'radio'}} dataSource={vehicles} columns={columns} />
     <StyledBottomButtons>
