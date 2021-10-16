@@ -1,12 +1,11 @@
 import { Button, Col, Input, Row, Form } from 'antd';
 import 'antd/dist/antd.css';
-import { FormInput } from '../../../components/FormInput';
 import {Paper} from '../../../components/Paper'
 import styled from 'styled-components';
 
 export const CreateVehicle: React.FC = () => {
   const onSend=()=>{
-      
+
   }
     return (
     <Paper>
