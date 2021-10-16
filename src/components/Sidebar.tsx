@@ -11,10 +11,10 @@ type SidebarProps={
 export const Sidebar: React.FC<SidebarProps> = ({ children,headerName }) => {
   return (
 <Layout>
-    <Sider width={256}>
+    <Sider width={256} style={{height:'100vh'}}>
         
   <Menu
-    style={{ width: 256 }}
+    style={{ width: 256 ,height:'100vh'}}
     defaultSelectedKeys={['1']}
     defaultOpenKeys={['sub1']}
     mode="inline"
@@ -33,7 +33,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ children,headerName }) => {
   </Menu>
   </Sider>
   <Layout>
-    <Header style={{backgroundColor:'#FFF',height:48}}>{headerName}</Header>
+    <Header style={{backgroundColor:'#FFF',height:48,fontSize:14,lineHeight:'48px'}}>{headerName}</Header>
   <Content style={{padding:32}}>
   {children}
   </Content>
