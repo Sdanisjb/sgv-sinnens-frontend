@@ -27,7 +27,7 @@ export const AppRouter: React.FC = () => {
       </Sidebar>
       <Sidebar headerName="Home">
       <Route exact path={paths.general.home} component={()=><div>Home</div>} />
-      </Sidebar>
+      </Sidebar>  
     </AppSwitch>
     </BrowserRouter>
   )
