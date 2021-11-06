@@ -38,6 +38,7 @@ export const Vehicles: React.FC = () => {
   function newVehicle() {
     history.push("/vehicles/create");
   }
+  /*CU-04 Editar Vehículo*/
   function updateVehicle() {
     history.push("/vehicles/update");
   }

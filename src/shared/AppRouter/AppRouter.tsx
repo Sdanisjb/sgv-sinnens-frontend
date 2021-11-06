@@ -30,6 +30,7 @@ export const AppRouter: React.FC = () => {
         />
 
         {/*CU-03 Registrar un nuevo vehículo*/}
+        {/*CU-04 Editar Vehículo*/}
         <Sidebar headerName="Vehículos">
           <Route exact path={paths.vehicles.default} component={Vehicles} />
           <Route exact path={paths.vehicles.create} component={CreateVehicle} />
