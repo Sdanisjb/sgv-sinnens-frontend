@@ -59,6 +59,7 @@ export const Vehicles: React.FC = () => {
       />
       {vehicleSelected ? (
         <StyledBottomButtons>
+          {/* CU-05 Borrar Vehículo */}
           <DeleteVehicle />
           <Button type="default" onClick={updateVehicle}>
             Editar Vehiculo
