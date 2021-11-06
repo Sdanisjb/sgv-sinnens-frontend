@@ -1,12 +1,17 @@
 import { Button, Col, Input, Row, Form } from 'antd';
 import 'antd/dist/antd.css';
-import { FormInput } from '../../../components/FormInput';
 import {Paper} from '../../../components/Paper'
 import styled from 'styled-components';
+import { useVehicles } from '../shared/VehiclesContext/VehiclesContext';
+import { IVehiclesToApi } from '../../../shared/api';
+import { useHistory } from 'react-router-dom';
 
 export const CreateVehicle: React.FC = () => {
-  const onSend=()=>{
-      
+const {createVehicle}=useVehicles()
+const history = useHistory();
+  const onSend=(event:IVehiclesToApi)=>{
+    createVehicle(event)
+    history.push("/vehicles");
   }
     return (
     <Paper>
@@ -24,7 +29,7 @@ export const CreateVehicle: React.FC = () => {
       <Col span={12} style={{padding:'8px 16px'}}>
       <Form.Item
         label="Propietario"
-        name="propietario"
+        name="usuario"
         rules={[
           {
             required: true,

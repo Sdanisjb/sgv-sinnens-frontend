@@ -1,33 +1,12 @@
 
 import { Button, Table } from 'antd';
 import 'antd/dist/antd.css';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
+import { useVehicles } from './shared/VehiclesContext/VehiclesContext';
+import { IVehicles } from '../../shared/api';
+import { DeleteVehicle } from './DeleteVehicle/DeleteVehicle';
 //"placa" : "ABC-123", "categoria" : "M1", "usuario" : "SINNENS", "unidad" : "Combi", "anho" : "2010" 
-const dataSource = [
-    {
-      key:'1',
-      placa : "ABC-123", categoria : "M1", usuario : "SINNENS", unidad : "Combi", anho : "2010" 
-    },
-    {
-      key:'2',
-      placa : "ABC-121", categoria : "M2", usuario : "SINENS", unidad : "Combii", anho : "2011" 
-    },
-    {
-      key:'3',
-      placa : "ABC-121", categoria : "M2", usuario : "SINENS", unidad : "Combii", anho : "2011" 
-    },
-    {
-      key:'4',
-      placa : "ABC-121", categoria : "M2", usuario : "SINENS", unidad : "Combii", anho : "2011" 
-    },
-    {
-      key:'5',
-      placa : "ABC-121", categoria : "M2", usuario : "SINENS", unidad : "Combii", anho : "2011" 
-    },
-  ];
   
   const columns = [
     {
@@ -52,40 +31,36 @@ const dataSource = [
     },
   ];
   
-
-type TypeVehicles={
-  key?:string,
-  placa : string, 
-  categoria : string, 
-  usuario : string, 
-  unidad : string, 
-  anho : string 
-}
 export const Vehicles: React.FC = () => {
-  const [vehicles,setVehicles]=useState<Array<TypeVehicles>>([])
+  const {vehicles,selectVehicle,vehicleSelected}=useVehicles(); 
+  
   const history = useHistory();
-
-  useEffect(()=>{
-    axios.get<Array<TypeVehicles> >(`https://quiet-eyrie-82714.herokuapp.com/api/vehicles`)
-    .then(res => {
-      const getVehicles:Array<TypeVehicles> = res.data;
-      setVehicles( getVehicles.map((element,index)=>({...element,key:`vehicles-list-item-${index}`}) ) );
-    })
-  },[]);
 
   function newVehicle() {
     history.push("/vehicles/create");
+  }
+  function updateVehicle() {
+    history.push("/vehicles/update");
+  }
+  function selectRow(selectedRowKeys:React.Key[],selectedRows:IVehicles[]) {
+    selectVehicle(selectedRows[0])
   }
   return (
     <>
     <StyledUpperButtons>
     <Button type="primary" onClick={newVehicle}>Nuevo Vehiculo</Button>
     </StyledUpperButtons>
-    <Table rowSelection={{type:'radio'}} dataSource={vehicles} columns={columns} />
+    <Table rowSelection={{type:'radio',onChange:selectRow}} dataSource={vehicles} columns={columns} />
+    {vehicleSelected?
+    <StyledBottomButtons>
+    <DeleteVehicle/>
+    <Button type="default" onClick={updateVehicle}>Editar Vehiculo</Button>
+    </StyledBottomButtons>:
     <StyledBottomButtons>
     <Button type="dashed" disabled>Eliminar Vehiculo</Button>
     <Button type="dashed" disabled>Editar Vehiculo</Button>
     </StyledBottomButtons>
+}
   </>
   );
 }

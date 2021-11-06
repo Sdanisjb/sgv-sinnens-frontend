@@ -3,12 +3,14 @@ import 'antd/dist/antd.css';
 import { CarFilled, ToolFilled, CopyFilled, FolderOpenFilled, ClockCircleFilled, TeamOutlined } from '@ant-design/icons';
 import Layout, { Content, Header } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
+import { useHistory } from 'react-router-dom';
 
 type SidebarProps={
     headerName:string
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ children,headerName }) => {
+  const history = useHistory();
   return (
 <Layout>
     <Sider width={256} style={{height:'100vh'}}>
@@ -23,7 +25,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ children,headerName }) => {
         <Menu.Item key="item-1" icon={<CopyFilled/>}>Registro Documentación</Menu.Item>
       </Menu.ItemGroup>
       <Menu.ItemGroup key="g2" title="Menú de Administrador">
-        <Menu.Item key="item-2" icon={<CarFilled/>}>Vehículos</Menu.Item>
+        <Menu.Item key="item-2" icon={<CarFilled/>} onClick={()=>history.push("/vehicles")}>Vehículos</Menu.Item>
         <Menu.Item key="item-3" icon={<TeamOutlined />}>Empleados</Menu.Item>
         <Menu.Item key="item-4" icon={<FolderOpenFilled />}>Reg. de Mantenimientos</Menu.Item>
         <Menu.Item key="item-5" icon={<ToolFilled />}>Ver Mantenimientos</Menu.Item>
