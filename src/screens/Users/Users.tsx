@@ -2,66 +2,61 @@ import { Button, Table } from "antd";
 import "antd/dist/antd.css";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { useVehicles } from "./shared/VehiclesContext/VehiclesContext";
-import { IVehicles } from "../../shared/api";
-import { DeleteVehicle } from "./DeleteVehicle/DeleteVehicle";
+import { useUsers } from "./shared/UsersContext/UsersContext";
+import { IUsers } from "../../shared/api";
+import { DeleteUser } from "./DeleteUser/DeleteUser";
+import { paths } from "../../shared/routes/paths";
 //"placa" : "ABC-123", "categoria" : "M1", "usuario" : "SINNENS", "unidad" : "Combi", "anho" : "2010"
 
 const columns = [
   {
-    title: "Placa",
-    dataIndex: "placa",
-    key: "placa",
+    title: "Dni",
+    dataIndex: "dni",
+    key: "dni",
   },
   {
-    title: "Año de Fabricación",
-    dataIndex: "anho",
-    key: "anho",
+    title: "Apellido",
+    dataIndex: "apellido",
+    key: "apellido",
   },
   {
-    title: "Tipo de Unidad",
-    dataIndex: "unidad",
-    key: "unidad",
-  },
-  {
-    title: "Categoría",
-    dataIndex: "categoria",
-    key: "categoria",
+    title: "Nombre",
+    dataIndex: "nombre",
+    key: "nombre",
   },
 ];
 
-export const Vehicles: React.FC = () => {
-  const { vehicles, selectVehicle, vehicleSelected } = useVehicles();
+export const Users: React.FC = () => {
+  const { users, selectUser, userSelected } = useUsers();
 
   const history = useHistory();
   //CU-03 Registrar un nuevo vehículo
-  function newVehicle() {
-    history.push("/vehicles/create");
+  function newUser() {
+    history.push(paths.users.create);
   }
   /*CU-04 Editar Vehículo*/
-  function updateVehicle() {
-    history.push("/vehicles/update");
+  function updateUser() {
+    history.push(paths.users.update);
   }
-  function selectRow(selectedRowKeys: React.Key[], selectedRows: IVehicles[]) {
-    selectVehicle(selectedRows[0]);
+  function selectRow(selectedRowKeys: React.Key[], selectedRows: IUsers[]) {
+    selectUser(selectedRows[0]);
   }
   return (
     <>
       <StyledUpperButtons>
-        <Button type="primary" onClick={newVehicle}>
+        <Button type="primary" onClick={newUser}>
           Nuevo Vehiculo
         </Button>
       </StyledUpperButtons>
       <Table
         rowSelection={{ type: "radio", onChange: selectRow }}
-        dataSource={vehicles}
+        dataSource={users}
         columns={columns}
       />
-      {vehicleSelected ? (
+      {userSelected ? (
         <StyledBottomButtons>
-          {/* CU-05 Borrar Vehículo */}
-          <DeleteVehicle />
-          <Button type="default" onClick={updateVehicle}>
+          <DeleteUser />
+          <Button type="default" onClick={updateUser}>
             Editar Vehiculo
           </Button>
         </StyledBottomButtons>
