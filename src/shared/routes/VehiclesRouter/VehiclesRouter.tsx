@@ -1,13 +1,13 @@
-import React from 'react'
-import { Route } from 'react-router-dom'
-import { Sidebar } from '../../../components/Sidebar'
-import { CreateVehicle } from '../../../screens/Vehicles/CreateVehicle/CreateVehicle'
-import { DeleteVehicle } from '../../../screens/Vehicles/DeleteVehicle/DeleteVehicle'
-import { VehiclesProvider } from '../../../screens/Vehicles/shared/VehiclesContext/VehiclesContext'
-import { UpdateVehicle } from '../../../screens/Vehicles/UpdateVehicle/UpdateVehicle'
-import { Vehicles } from '../../../screens/Vehicles/Vehicles'
-import AppSwitch from '../AppSwitch'
-import { paths } from '../paths'
+import React from "react";
+import { Route } from "react-router-dom";
+import { Sidebar } from "../../../components/Sidebar";
+import { CreateVehicle } from "../../../screens/Vehicles/CreateVehicle/CreateVehicle";
+import { DeleteVehicle } from "../../../screens/Vehicles/DeleteVehicle/DeleteVehicle";
+import { VehiclesProvider } from "../../../screens/Vehicles/shared/VehiclesContext/VehiclesContext";
+import { UpdateVehicle } from "../../../screens/Vehicles/UpdateVehicle/UpdateVehicle";
+import { Vehicles } from "../../../screens/Vehicles/Vehicles";
+import AppSwitch from "../AppSwitch";
+import { paths } from "../paths";
 
 export const VehiclesRouter: React.FC = () => {
   return (
@@ -21,5 +21,5 @@ export const VehiclesRouter: React.FC = () => {
         </VehiclesProvider>
       </Sidebar>
     </AppSwitch>
-  )
-}
+  );
+};
