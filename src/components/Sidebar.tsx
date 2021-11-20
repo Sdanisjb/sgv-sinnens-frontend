@@ -54,7 +54,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ children, headerName }) => {
             <Menu.Item key="item-5" icon={<ToolFilled />}>
               Ver Mantenimientos
             </Menu.Item>
-            <Menu.Item key="item-6" icon={<CopyFilled />}>
+            <Menu.Item
+              key="item-6"
+              icon={<CopyFilled />}
+              onClick={() => history.push(paths.documents.default)}
+            >
               Actualizar Documentación
             </Menu.Item>
             <Menu.Item key="item-7" icon={<ClockCircleFilled />}>

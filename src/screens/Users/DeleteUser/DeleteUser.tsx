@@ -1,4 +1,3 @@
-/* CU-05 Borrar Vehículo */
 import React from "react";
 import { Button } from "antd";
 import "antd/dist/antd.css";
@@ -16,17 +15,17 @@ export const DeleteUser: React.FC = () => {
     setModalIsVisible(false);
   };
   const handleOk = () => {
-    if (userSelected) deleteUser(userSelected.id);
+    if (userSelected) deleteUser(userSelected.DNI);
     setModalIsVisible(false);
   };
   return (
     <>
       <Button type="default" onClick={showModal}>
-        Eliminar Vehiculo
+        Eliminar Empleado
       </Button>
       <Modal
         visible={modalIsVisible}
-        title="Eliminar Vehiculo"
+        title="Eliminar Empleado"
         onOk={handleOk}
         onCancel={handleCancel}
         confirmLoading={loading}
@@ -44,7 +43,7 @@ export const DeleteUser: React.FC = () => {
           </Button>,
         ]}
       >
-        <p>¿Estas seguro que quieres Eliminar el Usuario Seleccionado?</p>
+        <p>¿Estas seguro que quieres Eliminar el Empleado Seleccionado?</p>
       </Modal>
     </>
   );

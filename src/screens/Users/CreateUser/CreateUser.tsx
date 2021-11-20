@@ -1,4 +1,3 @@
-//CU-03 Registrar un nuevo vehículo
 import { Button, Col, Input, Row, Form } from "antd";
 import "antd/dist/antd.css";
 import { Paper } from "../../../components/Paper";
@@ -6,17 +5,18 @@ import styled from "styled-components";
 import { useUsers } from "../shared/UsersContext/UsersContext";
 import { IUsersToApi } from "../../../shared/api";
 import { useHistory } from "react-router-dom";
+import { paths } from "../../../shared/routes/paths";
 
 export const CreateUser: React.FC = () => {
   const { createUser } = useUsers();
   const history = useHistory();
   const onSend = (event: IUsersToApi) => {
     createUser(event);
-    history.push("/Users");
+    history.push(paths.users.default);
   };
   return (
     <Paper>
-      <h1>Ingresa los Datos del Nuevo Vehículo</h1>
+      <h1>Ingresa los Datos del Nuevo Empleado</h1>
       <Form
         name="basic"
         layout="vertical"
@@ -29,8 +29,8 @@ export const CreateUser: React.FC = () => {
         <Row>
           <Col span={12} style={{ padding: "8px 16px" }}>
             <Form.Item
-              label="Propietario"
-              name="usuario"
+              label="Apellidos"
+              name="apellidos"
               rules={[
                 {
                   required: true,
@@ -42,36 +42,8 @@ export const CreateUser: React.FC = () => {
           </Col>
           <Col span={12} style={{ padding: "8px 16px" }}>
             <Form.Item
-              label="Placa"
-              name="placa"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12} style={{ padding: "8px 16px" }}>
-            <Form.Item
-              label="Año de Fabricación"
-              name="anho"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12} style={{ padding: "8px 16px" }}>
-            <Form.Item
-              label="Categoría"
-              name="categoria"
+              label="Nombres"
+              name="nombres"
               rules={[
                 {
                   required: true,
@@ -85,8 +57,8 @@ export const CreateUser: React.FC = () => {
         <Row>
           <Col span={12} style={{ padding: "8px 16px" }}>
             <Form.Item
-              label="Marca"
-              name="marca"
+              label="DNI"
+              name="DNI"
               rules={[
                 {
                   required: true,
@@ -98,8 +70,8 @@ export const CreateUser: React.FC = () => {
           </Col>
           <Col span={12} style={{ padding: "8px 16px" }}>
             <Form.Item
-              label="Tipo de Unidad"
-              name="unidad"
+              label="Correo Electrónico"
+              name="email"
               rules={[
                 {
                   required: true,
@@ -113,7 +85,7 @@ export const CreateUser: React.FC = () => {
         <Form.Item>
           <StyledBottomButtons>
             <Button type="primary" htmlType="submit">
-              Registrar Vehiculo
+              Registrar Empleado
             </Button>
           </StyledBottomButtons>
         </Form.Item>

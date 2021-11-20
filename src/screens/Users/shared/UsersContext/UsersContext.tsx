@@ -1,16 +1,18 @@
 import axios from "axios";
 import React from "react";
-import { IUsers, IUsersFromApi, IUsersToApi } from "../../../../shared/api";
-
-//import { User } from '../../shared/api'
-//import { client } from '../../shared/client'
+import {
+  config,
+  IUsers,
+  IUsersFromApi,
+  IUsersToApi,
+} from "../../../../shared/api";
 
 export interface UsersContextValue {
   users: IUsers[];
   userSelected: IUsers | undefined;
   createUser: (Usersel: IUsersToApi) => void;
-  updateUser: (User: IUsersToApi, id: number) => void;
-  deleteUser: (id: number) => void;
+  updateUser: (User: IUsersToApi, DNI: number) => void;
+  deleteUser: (DNI: number) => void;
   selectUser: (Usersel: IUsers | undefined) => void;
   loading: boolean;
   error: boolean;
@@ -30,30 +32,22 @@ const UsersProvider: React.FC = ({ children }) => {
     async function getUsers() {
       setLoading(true);
       try {
-        axios
-          .get<Array<IUsersFromApi>>(
-            `https://quiet-eyrie-82714.herokuapp.com/api/users`
-          )
-          .then((res) => {
-            const getUsers: Array<IUsersFromApi> = res.data;
-            console.log(getUsers);
-            setUsers(
-              getUsers.map((element, index) => {
-                const { id, placa, categoria, usuario, unidad, anho, marca } =
-                  element;
-                return {
-                  id,
-                  key: `Users-list-item-${id}`,
-                  placa,
-                  categoria,
-                  usuario,
-                  unidad,
-                  anho,
-                  marca,
-                };
-              })
-            );
-          });
+        axios.get<Array<IUsersFromApi>>(`${config.url}users`).then((res) => {
+          const getUsers: Array<IUsersFromApi> = res.data;
+          console.log(getUsers);
+          setUsers(
+            getUsers.map((element, index) => {
+              const { DNI, nombres, apellidos, email } = element;
+              return {
+                DNI,
+                key: `users-list-item-${DNI}`,
+                nombres,
+                apellidos,
+                email,
+              };
+            })
+          );
+        });
         setLoading(false);
       } catch (err: unknown) {
         console.error(err);
@@ -68,53 +62,48 @@ const UsersProvider: React.FC = ({ children }) => {
     setuserSelected(User);
   };
 
-  const createUser = (User: IUsersToApi) => {
+  const createUser = (user: IUsersToApi) => {
     axios
-      .post<IUsersFromApi>(
-        `https://quiet-eyrie-82714.herokuapp.com/api/Users`,
-        User
-      )
+      .post<IUsersFromApi>(`${config.url}users`, {
+        ...user,
+        password: user.DNI,
+      })
       .then((res) => {
-        const { id, placa, categoria, usuario, unidad, anho, marca } = res.data;
+        const { DNI, nombres, apellidos, email } = res.data;
         setUsers([
           ...users,
           {
-            id,
-            key: `users-list-item-${id}`,
-            placa,
-            categoria,
-            usuario,
-            unidad,
-            anho,
-            marca,
+            DNI,
+            key: `users-list-item-${DNI}`,
+            nombres,
+            apellidos,
+            email,
           },
         ]);
       });
   };
 
-  const updateUser = (user: IUsersToApi, id: number) => {
-    axios
-      .put<IUsersFromApi>(
-        `https://quiet-eyrie-82714.herokuapp.com/api/Users/${id}`,
-        user
-      )
-      .then((res) => {
-        setUsers([
-          ...users.filter((userValue) => userValue.id !== id),
-          { id, key: `users-list-item-${id}`, ...user },
-        ]);
-      });
+  const updateUser = (user: IUsersToApi, DNI: number) => {
+    axios.put<IUsersFromApi>(`${config.url}users/${DNI}`, user).then((res) => {
+      setUsers([
+        ...users.filter((userValue) => userValue.DNI !== DNI),
+        { key: `users-list-item-${DNI}`, ...user },
+      ]);
+      setuserSelected(undefined);
+    });
   };
-  const deleteUser = (id: number) => {
+  const deleteUser = (DNI: number) => {
     setLoading(true);
     try {
-      axios.delete(`https://quiet-eyrie-82714.herokuapp.com/api/Users/${id}`);
+      axios.delete(`${config.url}users/${DNI}`);
       setLoading(false);
-      setUsers(users.filter((userValue) => userValue.id !== id));
+      setUsers(users.filter((userValue) => userValue.DNI !== DNI));
+      setuserSelected(undefined);
     } catch (err: unknown) {
       console.error(err);
       setError(true);
       setLoading(false);
+      setuserSelected(undefined);
     }
   };
 

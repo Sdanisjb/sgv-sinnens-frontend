@@ -109,6 +109,7 @@ const VehiclesProvider: React.FC = ({ children }) => {
           ...vehicles.filter((vehicleValue) => vehicleValue.id !== id),
           { id, key: `vehicles-list-item-${id}`, ...vehicle },
         ]);
+        setVehicleSelected(undefined);
       });
   };
   const deleteVehicle = (id: number) => {
@@ -119,10 +120,12 @@ const VehiclesProvider: React.FC = ({ children }) => {
       );
       setLoading(false);
       setVehicles(vehicles.filter((vehicleValue) => vehicleValue.id !== id));
+      setVehicleSelected(undefined);
     } catch (err: unknown) {
       console.error(err);
       setError(true);
       setLoading(false);
+      setVehicleSelected(undefined);
     }
   };
 

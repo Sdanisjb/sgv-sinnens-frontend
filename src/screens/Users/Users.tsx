@@ -10,19 +10,24 @@ import { paths } from "../../shared/routes/paths";
 
 const columns = [
   {
-    title: "Dni",
-    dataIndex: "dni",
-    key: "dni",
+    title: "DNI",
+    dataIndex: "DNI",
+    key: "DNI",
   },
   {
     title: "Apellido",
-    dataIndex: "apellido",
-    key: "apellido",
+    dataIndex: "apellidos",
+    key: "apellidos",
   },
   {
     title: "Nombre",
-    dataIndex: "nombre",
-    key: "nombre",
+    dataIndex: "nombres",
+    key: "nombres",
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
   },
 ];
 
@@ -30,11 +35,9 @@ export const Users: React.FC = () => {
   const { users, selectUser, userSelected } = useUsers();
 
   const history = useHistory();
-  //CU-03 Registrar un nuevo vehículo
   function newUser() {
     history.push(paths.users.create);
   }
-  /*CU-04 Editar Vehículo*/
   function updateUser() {
     history.push(paths.users.update);
   }
@@ -45,7 +48,7 @@ export const Users: React.FC = () => {
     <>
       <StyledUpperButtons>
         <Button type="primary" onClick={newUser}>
-          Nuevo Vehiculo
+          Nuevo Empleado
         </Button>
       </StyledUpperButtons>
       <Table
@@ -57,16 +60,16 @@ export const Users: React.FC = () => {
         <StyledBottomButtons>
           <DeleteUser />
           <Button type="default" onClick={updateUser}>
-            Editar Vehiculo
+            Editar Empleado
           </Button>
         </StyledBottomButtons>
       ) : (
         <StyledBottomButtons>
           <Button type="dashed" disabled>
-            Eliminar Vehiculo
+            Eliminar Empleado
           </Button>
           <Button type="dashed" disabled>
-            Editar Vehiculo
+            Editar Empleado
           </Button>
         </StyledBottomButtons>
       )}

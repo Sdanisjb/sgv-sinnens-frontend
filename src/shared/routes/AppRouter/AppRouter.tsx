@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Sidebar } from "../../../components/Sidebar";
 import AppSwitch from "../AppSwitch";
+import { DocumentsRouter } from "../Documents";
 import { paths } from "../paths";
 import { UsersRouter } from "../UsersRouter";
 import { VehiclesRouter } from "../VehiclesRouter";
@@ -35,6 +36,10 @@ export const AppRouter: React.FC = () => {
           component={() => <VehiclesRouter />}
         />
         <Route path={paths.users.default} component={() => <UsersRouter />} />
+        <Route
+          path={paths.documents.default}
+          component={() => <DocumentsRouter />}
+        />
         <Sidebar headerName="Home">
           <Route
             exact

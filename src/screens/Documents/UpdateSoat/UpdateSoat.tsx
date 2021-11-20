@@ -1,42 +1,39 @@
+/*CU-04 Editar Vehículo*/
 import React from "react";
 import { Button, Col, Input, Row, Form } from "antd";
 import "antd/dist/antd.css";
 import { Paper } from "../../../components/Paper";
 import styled from "styled-components";
-import { useUsers } from "../shared/UsersContext/UsersContext";
-import { IUsersToApi } from "../../../shared/api";
+import { useDocuments } from "../shared/DocumentsContext/DocumentsContext";
+import { IDocuments } from "../../../shared/api";
 import { useHistory } from "react-router-dom";
-import { paths } from "../../../shared/routes/paths";
 
-export const UpdateUser: React.FC = () => {
-  const { userSelected, updateUser } = useUsers();
+export const UpdateSoat: React.FC = () => {
+  const { documentSelected, updateSoat } = useDocuments();
   const [fields, setFields] = React.useState([
     {
-      name: ["DNI"],
-      value: userSelected?.DNI,
+      name: ["soat_venc"],
+      value: documentSelected?.soat_venc,
     },
     {
-      name: ["apellidos"],
-      value: userSelected?.apellidos,
-    },
-    {
-      name: ["nombres"],
-      value: userSelected?.nombres,
-    },
-    {
-      name: ["email"],
-      value: userSelected?.email,
+      name: ["soat_renovacion"],
+      value: documentSelected?.soat_renovacion,
     },
   ]);
   const history = useHistory();
 
-  const onSend = (event: IUsersToApi) => {
-    if (userSelected) updateUser(event, userSelected.DNI);
-    history.push(paths.users.default);
+  const onSend = (event: { soat_renovacion: string; soat_venc: string }) => {
+    if (documentSelected)
+      updateSoat(
+        documentSelected.placa,
+        event.soat_renovacion,
+        event.soat_venc
+      );
+    history.push("/documents");
   };
   return (
     <Paper>
-      <h1>Ingresa los Datos del Nuevo Empleado</h1>
+      <h1>Actualizar Información de SOAT</h1>
       <Form
         name="basic"
         layout="vertical"
@@ -50,21 +47,8 @@ export const UpdateUser: React.FC = () => {
         <Row>
           <Col span={12} style={{ padding: "8px 16px" }}>
             <Form.Item
-              label="Apellidos"
-              name="apellidos"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12} style={{ padding: "8px 16px" }}>
-            <Form.Item
-              label="Nombres"
-              name="nombres"
+              label="Fecha de Emisión"
+              name="soat_venc"
               rules={[
                 {
                   required: true,
@@ -78,21 +62,8 @@ export const UpdateUser: React.FC = () => {
         <Row>
           <Col span={12} style={{ padding: "8px 16px" }}>
             <Form.Item
-              label="DNI"
-              name="DNI"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12} style={{ padding: "8px 16px" }}>
-            <Form.Item
-              label="Correo Electrónico"
-              name="email"
+              label="Fecha de Vencimiento"
+              name="soat_renovacion"
               rules={[
                 {
                   required: true,
@@ -106,7 +77,7 @@ export const UpdateUser: React.FC = () => {
         <Form.Item>
           <StyledBottomButtons>
             <Button type="primary" htmlType="submit">
-              Registrar Empleado
+              Guardar Cambios
             </Button>
           </StyledBottomButtons>
         </Form.Item>

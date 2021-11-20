@@ -26,4 +26,11 @@ export const paths = {
     update: "/maintenances/update",
     delete: "/maintenances/delete",
   },
+  documents: {
+    default: "/documents",
+    autrisa: "/documents/autrisa",
+    mtc: "/documents/mtc",
+    soat: "/documents/soat",
+    mercancia: "/documents/mercancia",
+  },
 };
