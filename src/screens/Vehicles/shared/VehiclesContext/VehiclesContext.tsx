@@ -13,8 +13,8 @@ export interface VehiclesContextValue {
   vehicles: IVehicles[];
   vehicleSelected: IVehicles | undefined;
   createVehicle: (vehicleSel: IVehiclesToApi) => void;
-  updateVehicle: (vehicle: IVehiclesToApi, id: number) => void;
-  deleteVehicle: (id: number) => void;
+  updateVehicle: (vehicle: IVehiclesToApi, placa: string) => void;
+  deleteVehicle: (placa: string) => void;
   selectVehicle: (vehicleSel: IVehicles | undefined) => void;
   loading: boolean;
   error: boolean;
@@ -42,16 +42,14 @@ const VehiclesProvider: React.FC = ({ children }) => {
           )
           .then((res) => {
             const getVehicles: Array<IVehiclesFromApi> = res.data;
-            //console.log(getVehicles)
+            console.log(getVehicles);
             setVehicles(
               getVehicles.map((element, index) => {
-                const { id, placa, categoria, usuario, unidad, anho, marca } =
-                  element;
+                const { placa, tipo, usuario, unidad, anho, marca } = element;
                 return {
-                  id,
-                  key: `vehicles-list-item-${id}`,
+                  key: `vehicles-list-item-${placa}`,
                   placa,
-                  categoria,
+                  tipo,
                   usuario,
                   unidad,
                   anho,
@@ -81,14 +79,13 @@ const VehiclesProvider: React.FC = ({ children }) => {
         vehicle
       )
       .then((res) => {
-        const { id, placa, categoria, usuario, unidad, anho, marca } = res.data;
+        const { placa, tipo, usuario, unidad, anho, marca } = res.data;
         setVehicles([
           ...vehicles,
           {
-            id,
-            key: `vehicles-list-item-${id}`,
+            key: `vehicles-list-item-${placa}`,
             placa,
-            categoria,
+            tipo,
             usuario,
             unidad,
             anho,
@@ -98,28 +95,30 @@ const VehiclesProvider: React.FC = ({ children }) => {
       });
   };
 
-  const updateVehicle = (vehicle: IVehiclesToApi, id: number) => {
+  const updateVehicle = (vehicle: IVehiclesToApi, placa: string) => {
     axios
       .put<IVehiclesFromApi>(
-        `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${id}`,
+        `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}`,
         vehicle
       )
       .then((res) => {
         setVehicles([
-          ...vehicles.filter((vehicleValue) => vehicleValue.id !== id),
-          { id, key: `vehicles-list-item-${id}`, ...vehicle },
+          ...vehicles.filter((vehicleValue) => vehicleValue.placa !== placa),
+          { ...vehicle, placa, key: `vehicles-list-item-${placa}` },
         ]);
         setVehicleSelected(undefined);
       });
   };
-  const deleteVehicle = (id: number) => {
+  const deleteVehicle = (placa: string) => {
     setLoading(true);
     try {
       axios.delete(
-        `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${id}`
+        `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}`
       );
       setLoading(false);
-      setVehicles(vehicles.filter((vehicleValue) => vehicleValue.id !== id));
+      setVehicles(
+        vehicles.filter((vehicleValue) => vehicleValue.placa !== placa)
+      );
       setVehicleSelected(undefined);
     } catch (err: unknown) {
       console.error(err);

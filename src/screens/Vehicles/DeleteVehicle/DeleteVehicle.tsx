@@ -17,7 +17,7 @@ export const DeleteVehicle: React.FC = () => {
     setModalIsVisible(false);
   };
   const handleOk = () => {
-    if (vehicleSelected) deleteVehicle(vehicleSelected.id);
+    if (vehicleSelected) deleteVehicle(vehicleSelected.placa);
     setModalIsVisible(false);
   };
   return (

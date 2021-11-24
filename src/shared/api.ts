@@ -3,9 +3,8 @@ export const config = {
 };
 
 export type IVehiclesFromApi = {
-  id: number;
   placa: string;
-  categoria: string;
+  tipo: string;
   usuario: string;
   unidad: string;
   marca: string;
@@ -16,9 +15,8 @@ export type IVehiclesFromApi = {
 
 export type IVehicles = {
   key: string;
-  id: number;
   placa: string;
-  categoria: string;
+  tipo: string;
   usuario: string;
   unidad: string;
   marca: string;
@@ -27,7 +25,7 @@ export type IVehicles = {
 
 export type IVehiclesToApi = {
   placa: string;
-  categoria: string;
+  tipo: string;
   usuario: string;
   unidad: string;
   marca: string;

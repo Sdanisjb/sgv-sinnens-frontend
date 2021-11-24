@@ -24,8 +24,8 @@ export const UpdateVehicle: React.FC = () => {
       value: vehicleSelected?.anho,
     },
     {
-      name: ["categoria"],
-      value: vehicleSelected?.categoria,
+      name: ["tipo"],
+      value: vehicleSelected?.tipo,
     },
     {
       name: ["marca"],
@@ -39,7 +39,7 @@ export const UpdateVehicle: React.FC = () => {
   const history = useHistory();
 
   const onSend = (event: IVehiclesToApi) => {
-    if (vehicleSelected) updateVehicle(event, vehicleSelected.id);
+    if (vehicleSelected) updateVehicle(event, vehicleSelected.placa);
     history.push("/vehicles");
   };
   return (
@@ -100,7 +100,7 @@ export const UpdateVehicle: React.FC = () => {
           <Col span={12} style={{ padding: "8px 16px" }}>
             <Form.Item
               label="Categoría"
-              name="categoria"
+              name="tipo"
               rules={[
                 {
                   required: true,

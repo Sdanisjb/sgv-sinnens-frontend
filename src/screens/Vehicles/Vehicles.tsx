@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useVehicles } from "./shared/VehiclesContext/VehiclesContext";
 import { IVehicles } from "../../shared/api";
 import { DeleteVehicle } from "./DeleteVehicle/DeleteVehicle";
-//"placa" : "ABC-123", "categoria" : "M1", "usuario" : "SINNENS", "unidad" : "Combi", "anho" : "2010"
+//"placa" : "ABC-123", "tipo" : "M1", "usuario" : "SINNENS", "unidad" : "Combi", "anho" : "2010"
 
 const columns = [
   {
@@ -24,9 +24,14 @@ const columns = [
     key: "unidad",
   },
   {
-    title: "Categoría",
-    dataIndex: "categoria",
-    key: "categoria",
+    title: "Tipo",
+    dataIndex: "tipo",
+    key: "tipo",
+  },
+  {
+    title: "Propietario",
+    dataIndex: "usuario",
+    key: "usuario",
   },
 ];
 
