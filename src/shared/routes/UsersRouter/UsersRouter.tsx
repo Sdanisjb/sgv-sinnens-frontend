@@ -1,4 +1,5 @@
 /* CU - 11 Registrar Nuevo Empleado */
+/* CU - 12 Editar Empleado */
 import React from "react";
 import { Route } from "react-router-dom";
 import { Sidebar } from "../../../components/Sidebar";

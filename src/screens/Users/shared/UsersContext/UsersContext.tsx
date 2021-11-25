@@ -82,7 +82,7 @@ const UsersProvider: React.FC = ({ children }) => {
         ]);
       });
   };
-
+  /* CU - 12 Editar Empleado */
   const updateUser = (user: IUsersToApi, DNI: number) => {
     axios.put<IUsersFromApi>(`${config.url}users/${DNI}`, user).then((res) => {
       setUsers([

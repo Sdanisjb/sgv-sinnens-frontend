@@ -1,3 +1,4 @@
+/* CU - 12 Editar Empleado */
 import React from "react";
 import { Button, Col, Input, Row, Form } from "antd";
 import "antd/dist/antd.css";
