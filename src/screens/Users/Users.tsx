@@ -50,6 +50,7 @@ export const Users: React.FC = () => {
   const { users, selectUser, userSelected } = useUsers();
 
   const history = useHistory();
+  /* CU - 11 Registrar Nuevo Empleado */
   function newUser() {
     history.push(paths.users.create);
   }
@@ -74,6 +75,7 @@ export const Users: React.FC = () => {
       {userSelected ? (
         <StyledBottomButtons>
           <DeleteUser />
+          {/* CU - 11 Registrar Nuevo Empleado */}
           <Button type="default" onClick={updateUser}>
             Editar Empleado
           </Button>
@@ -83,6 +85,7 @@ export const Users: React.FC = () => {
           <Button type="dashed" disabled>
             Eliminar Empleado
           </Button>
+          {/* CU - 11 Registrar Nuevo Empleado */}
           <Button type="dashed" disabled>
             Editar Empleado
           </Button>

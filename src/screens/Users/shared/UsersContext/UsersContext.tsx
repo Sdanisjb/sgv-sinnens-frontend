@@ -61,7 +61,7 @@ const UsersProvider: React.FC = ({ children }) => {
   const selectUser = (User: IUsers | undefined) => {
     setuserSelected(User);
   };
-
+  /* CU - 11 Registrar Nuevo Empleado */
   const createUser = (user: IUsersToApi) => {
     axios
       .post<IUsersFromApi>(`${config.url}users`, {

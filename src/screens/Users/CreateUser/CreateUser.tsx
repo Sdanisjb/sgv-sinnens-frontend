@@ -1,3 +1,4 @@
+/* CU - 11 Registrar Nuevo Empleado */
 import { Button, Col, Input, Row, Form } from "antd";
 import "antd/dist/antd.css";
 import { Paper } from "../../../components/Paper";
