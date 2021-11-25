@@ -14,6 +14,7 @@ const AuthContext = React.createContext<AuthContextValue | undefined>(
   undefined
 );
 
+/*CU - 10 Loguearse en el sistema*/
 const AuthProvider: React.FC = ({ children }) => {
   const history = useHistory();
   const [email, setEmail] = React.useState("");
