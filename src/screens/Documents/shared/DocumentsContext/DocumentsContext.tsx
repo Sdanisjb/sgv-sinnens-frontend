@@ -170,12 +170,21 @@ const DocumentsProvider: React.FC = ({ children }) => {
             }
           : null,
     };*/
+    const config = {
+      headers: {
+        Accept: "application/json",
+      },
+    };
     if (documentSelected?.soat_venc || documentSelected?.soat_renovacion) {
       axios
-        .put(`https://quiet-eyrie-82714.herokuapp.com/api/soat/${placa}/`, {
-          fecha_emision,
-          fecha_venc,
-        })
+        .put(
+          `https://quiet-eyrie-82714.herokuapp.com/api/soat/${placa}/`,
+          {
+            fecha_emision,
+            fecha_venc,
+          },
+          config
+        )
         .then((res) => {
           setDocuments([
             ...documents.filter(
@@ -193,7 +202,8 @@ const DocumentsProvider: React.FC = ({ children }) => {
       axios
         .post(
           `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}/soat`,
-          { fecha_emision, fecha_venc }
+          { fecha_emision, fecha_venc },
+          config
         )
         .then((res) => {
           setDocuments([

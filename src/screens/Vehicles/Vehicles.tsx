@@ -146,8 +146,6 @@ export const Vehicles: React.FC = () => {
     vehicles.forEach((vehicle) => {
       const anho = vehicle.anho.toString();
       const { unidad, tipo, usuario } = vehicle;
-
-      console.log(anho);
       if (auxSeriesYear[anho]) auxSeriesYear[anho] += 1;
       else auxSeriesYear[anho] = 1;
       if (auxSeriesUnidad[unidad]) auxSeriesUnidad[unidad] += 1;

@@ -73,11 +73,11 @@ const UsersProvider: React.FC = ({ children }) => {
         setUsers([
           ...users,
           {
-            DNI,
+            DNI: user.DNI,
             key: `users-list-item-${DNI}`,
-            nombres,
-            apellidos,
-            email,
+            nombres: user.nombres,
+            apellidos: user.apellidos,
+            email: user.email,
           },
         ]);
       });

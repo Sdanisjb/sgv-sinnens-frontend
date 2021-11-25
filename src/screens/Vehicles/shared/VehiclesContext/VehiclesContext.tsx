@@ -42,7 +42,7 @@ const VehiclesProvider: React.FC = ({ children }) => {
           )
           .then((res) => {
             const getVehicles: Array<IVehiclesFromApi> = res.data;
-            console.log(getVehicles);
+            //console.log(getVehicles);
             setVehicles(
               getVehicles.map((element, index) => {
                 const { placa, tipo, usuario, unidad, anho, marca } = element;
@@ -98,7 +98,7 @@ const VehiclesProvider: React.FC = ({ children }) => {
   const updateVehicle = (vehicle: IVehiclesToApi, placa: string) => {
     axios
       .put<IVehiclesFromApi>(
-        `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}`,
+        `http://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}`,
         vehicle
       )
       .then((res) => {
@@ -113,7 +113,7 @@ const VehiclesProvider: React.FC = ({ children }) => {
     setLoading(true);
     try {
       axios.delete(
-        `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}`
+        `http://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}`
       );
       setLoading(false);
       setVehicles(

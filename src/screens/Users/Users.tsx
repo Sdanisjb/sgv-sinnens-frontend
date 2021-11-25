@@ -3,31 +3,46 @@ import "antd/dist/antd.css";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useUsers } from "./shared/UsersContext/UsersContext";
-import { IUsers } from "../../shared/api";
+import { IUsers, IUsersFromApi } from "../../shared/api";
 import { DeleteUser } from "./DeleteUser/DeleteUser";
 import { paths } from "../../shared/routes/paths";
-//"placa" : "ABC-123", "categoria" : "M1", "usuario" : "SINNENS", "unidad" : "Combi", "anho" : "2010"
 
 const columns = [
   {
     title: "DNI",
     dataIndex: "DNI",
     key: "DNI",
+    sorter: (a: IUsers, b: IUsers) => a.DNI - b.DNI,
   },
   {
     title: "Apellido",
     dataIndex: "apellidos",
     key: "apellidos",
+    sorter: (a: IUsers, b: IUsers) =>
+      a.apellidos.charCodeAt(0) * 10000 -
+      b.apellidos.charCodeAt(0) * 10000 +
+      (a.apellidos.charCodeAt(1) * 100 - b.apellidos.charCodeAt(1) * 100) +
+      (a.apellidos.charCodeAt(2) - b.apellidos.charCodeAt(2)),
   },
   {
     title: "Nombre",
     dataIndex: "nombres",
     key: "nombres",
+    sorter: (a: IUsers, b: IUsers) =>
+      a.nombres.charCodeAt(0) * 10000 -
+      b.nombres.charCodeAt(0) * 10000 +
+      (a.nombres.charCodeAt(1) * 100 - b.nombres.charCodeAt(1) * 100) +
+      (a.nombres.charCodeAt(2) - b.nombres.charCodeAt(2)),
   },
   {
     title: "Email",
     dataIndex: "email",
     key: "email",
+    sorter: (a: IUsers, b: IUsers) =>
+      a.email.charCodeAt(0) * 10000 -
+      b.email.charCodeAt(0) * 10000 +
+      (a.email.charCodeAt(1) * 100 - b.email.charCodeAt(1) * 100) +
+      (a.email.charCodeAt(2) - b.email.charCodeAt(2)),
   },
 ];
 

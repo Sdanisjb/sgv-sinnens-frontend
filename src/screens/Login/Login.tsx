@@ -65,14 +65,14 @@ export const Login: React.FC = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input type="password" />
               </Form.Item>
             </Col>
           </Row>
           <Form.Item>
             <StyledBottomButtons>
               <Button type="primary" htmlType="submit">
-                Registrar Empleado
+                Ingresar al Sistema
               </Button>
             </StyledBottomButtons>
           </Form.Item>

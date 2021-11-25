@@ -7,31 +7,70 @@ import { IDocuments } from "../../shared/api";
 import { paths } from "../../shared/routes/paths";
 //"placa" : "ABC-123", "categoria" : "M1", "usuario" : "SINNENS", "unidad" : "Combi", "anho" : "2010"
 
+const renderCellWColor = (text: string) => {
+  if (!text) {
+    return {
+      children: <div>-</div>,
+    };
+  }
+  const today = new Date();
+  const date = new Date(text);
+  const daysUntil = Math.floor(
+    (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  console.log(daysUntil);
+  return {
+    props: {
+      style: {
+        background:
+          daysUntil > 60
+            ? "#4C48"
+            : daysUntil > 30
+            ? "#CC48"
+            : daysUntil > 15
+            ? "#C948"
+            : daysUntil > 0
+            ? "#C448"
+            : "#C44E",
+      },
+    },
+    children: <div>{text}</div>,
+  };
+};
 const columns = [
   {
     title: "Placa",
     dataIndex: "placa",
     key: "placa",
+    sorter: (a: IDocuments, b: IDocuments) =>
+      a.placa.charCodeAt(0) * 10000 -
+      b.placa.charCodeAt(0) * 10000 +
+      (a.placa.charCodeAt(1) * 100 - b.placa.charCodeAt(1) * 100) +
+      (a.placa.charCodeAt(2) - b.placa.charCodeAt(2)),
   },
   {
     title: "SOAT",
     dataIndex: "soat_venc",
     key: "soat_venc",
+    render: renderCellWColor,
   },
   {
     title: "ITV AUTRISA",
     dataIndex: "permiso_autrisa_venc",
     key: "permiso_autrisa_venc",
+    render: renderCellWColor,
   },
   {
     title: "ITV MTC",
     dataIndex: "permiso_mtc_venc",
     key: "permiso_mtc_venc",
+    render: renderCellWColor,
   },
   {
     title: "Transporte Mercancia",
     dataIndex: "permiso_transp_mercancia_venc",
     key: "permiso_transp_mercancia_venc",
+    render: renderCellWColor,
   },
 ];
 
