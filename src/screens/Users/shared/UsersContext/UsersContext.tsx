@@ -92,6 +92,7 @@ const UsersProvider: React.FC = ({ children }) => {
       setuserSelected(undefined);
     });
   };
+  /* CU - 13 Eliminar  Empleado */
   const deleteUser = (DNI: number) => {
     setLoading(true);
     try {

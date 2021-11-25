@@ -83,6 +83,7 @@ export const Users: React.FC = () => {
         </StyledBottomButtons>
       ) : (
         <StyledBottomButtons>
+          {/* CU - 13 Eliminar  Empleado */}
           <Button type="dashed" disabled>
             Eliminar Empleado
           </Button>
