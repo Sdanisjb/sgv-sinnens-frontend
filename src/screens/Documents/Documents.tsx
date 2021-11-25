@@ -1,3 +1,7 @@
+/* CU - 14 Actualizar SOAT*/
+/* CU - 15 Actualizar ITV Autrisa*/
+/* CU - 16 Actualizar ITV MTC*/
+/* CU - 17 Actualizar Permiso de Transporte de Mercancía*/
 import { Button, Table } from "antd";
 import "antd/dist/antd.css";
 import styled from "styled-components";
@@ -5,7 +9,6 @@ import { useHistory } from "react-router-dom";
 import { useDocuments } from "./shared/DocumentsContext/DocumentsContext";
 import { IDocuments } from "../../shared/api";
 import { paths } from "../../shared/routes/paths";
-//"placa" : "ABC-123", "categoria" : "M1", "usuario" : "SINNENS", "unidad" : "Combi", "anho" : "2010"
 
 const renderCellWColor = (text: string) => {
   if (!text) {
@@ -78,15 +81,19 @@ export const Documents: React.FC = () => {
   const { documents, selectDocument, documentSelected } = useDocuments();
 
   const history = useHistory();
+  /* CU - 14 Actualizar SOAT*/
   function routeSoat() {
     history.push(paths.documents.soat);
   }
+  /* CU - 15 Actualizar ITV Autrisa*/
   function routeAutrisa() {
     history.push(paths.documents.autrisa);
   }
+  /* CU - 16 Actualizar ITV MTC*/
   function routeMtc() {
     history.push(paths.documents.mtc);
   }
+  /* CU - 17 Actualizar Permiso de Transporte de Mercancía*/
   function routeMercancia() {
     history.push(paths.documents.mercancia);
   }

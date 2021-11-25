@@ -1,4 +1,7 @@
-/*CU-04 Editar Vehículo*/
+/* CU - 14 Actualizar SOAT*/
+/* CU - 15 Actualizar ITV Autrisa*/
+/* CU - 16 Actualizar ITV MTC*/
+/* CU - 17 Actualizar Permiso de Transporte de Mercancía*/
 import React from "react";
 import { Button, Col, Input, Row, Form } from "antd";
 import "antd/dist/antd.css";
