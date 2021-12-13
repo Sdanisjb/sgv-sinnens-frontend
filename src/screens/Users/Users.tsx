@@ -6,6 +6,8 @@ import { useUsers } from "./shared/UsersContext/UsersContext";
 import { IUsers, IUsersFromApi } from "../../shared/api";
 import { DeleteUser } from "./DeleteUser/DeleteUser";
 import { paths } from "../../shared/routes/paths";
+import FilterDni from "../../shared/filters/FilterDni";
+import FilterWords from "../../shared/filters/FilterWords";
 
 const columns = [
   {
@@ -13,6 +15,9 @@ const columns = [
     dataIndex: "DNI",
     key: "DNI",
     sorter: (a: IUsers, b: IUsers) => a.DNI - b.DNI,
+    filterDropdown: FilterDni,
+    onFilter: (value: string | number | boolean, record: IUsers) =>
+      record.DNI.toString().includes(value.toString()),
   },
   {
     title: "Apellido",
@@ -23,6 +28,12 @@ const columns = [
       b.apellidos.charCodeAt(0) * 10000 +
       (a.apellidos.charCodeAt(1) * 100 - b.apellidos.charCodeAt(1) * 100) +
       (a.apellidos.charCodeAt(2) - b.apellidos.charCodeAt(2)),
+    filterDropdown: FilterWords,
+    onFilter: (value: string | number | boolean, record: IUsers) =>
+      record.apellidos
+        .toString()
+        .toLowerCase()
+        .includes(value.toString().toLowerCase()),
   },
   {
     title: "Nombre",
@@ -33,6 +44,12 @@ const columns = [
       b.nombres.charCodeAt(0) * 10000 +
       (a.nombres.charCodeAt(1) * 100 - b.nombres.charCodeAt(1) * 100) +
       (a.nombres.charCodeAt(2) - b.nombres.charCodeAt(2)),
+    filterDropdown: FilterWords,
+    onFilter: (value: string | number | boolean, record: IUsers) =>
+      record.nombres
+        .toString()
+        .toLowerCase()
+        .includes(value.toString().toLowerCase()),
   },
   {
     title: "Email",
@@ -43,6 +60,11 @@ const columns = [
       b.email.charCodeAt(0) * 10000 +
       (a.email.charCodeAt(1) * 100 - b.email.charCodeAt(1) * 100) +
       (a.email.charCodeAt(2) - b.email.charCodeAt(2)),
+    onFilter: (value: string | number | boolean, record: IUsers) =>
+      record.email
+        .toString()
+        .toLowerCase()
+        .includes(value.toString().toLowerCase()),
   },
 ];
 

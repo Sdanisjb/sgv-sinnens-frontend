@@ -5,6 +5,7 @@ import {
   IVehiclesFromApi,
   IVehiclesToApi,
 } from "../../../../shared/api";
+import { useAuth } from "../../../../shared/AuthContext/AuthContext";
 
 //import { User } from '../../shared/api'
 //import { client } from '../../shared/client'
@@ -31,6 +32,7 @@ const VehiclesProvider: React.FC = ({ children }) => {
   >();
   const [error, setError] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const { token } = useAuth();
 
   React.useEffect(() => {
     async function getVehicles() {
@@ -38,14 +40,20 @@ const VehiclesProvider: React.FC = ({ children }) => {
       try {
         axios
           .get<Array<IVehiclesFromApi>>(
-            `https://quiet-eyrie-82714.herokuapp.com/api/vehicles`
+            `https://quiet-eyrie-82714.herokuapp.com/api/vehicles`,
+            {
+              headers: {
+                Authorization: `Bearer ${token?.access_token}`,
+                Accept: "application/json",
+              },
+            }
           )
           .then((res) => {
             const getVehicles: Array<IVehiclesFromApi> = res.data;
-            //console.log(getVehicles);
+            console.log(getVehicles);
             setVehicles(
               getVehicles.map((element, index) => {
-                const { placa, tipo, usuario, unidad, anho, marca } = element;
+                const { placa, tipo, usuario, unidad, anho } = element;
                 return {
                   key: `vehicles-list-item-${placa}`,
                   placa,
@@ -53,7 +61,6 @@ const VehiclesProvider: React.FC = ({ children }) => {
                   usuario,
                   unidad,
                   anho,
-                  marca,
                 };
               })
             );
@@ -66,20 +73,27 @@ const VehiclesProvider: React.FC = ({ children }) => {
       }
     }
     getVehicles();
-  }, []);
+  }, [token]);
 
   const selectVehicle = (vehicle: IVehicles | undefined) => {
     setVehicleSelected(vehicle);
   };
 
   const createVehicle = (vehicle: IVehiclesToApi) => {
+    console.log(vehicle);
     axios
       .post<IVehiclesFromApi>(
         `https://quiet-eyrie-82714.herokuapp.com/api/vehicles`,
-        vehicle
+        vehicle,
+        {
+          headers: {
+            Authorization: `Bearer ${token?.access_token}`,
+            Accept: "application/json",
+          },
+        }
       )
       .then((res) => {
-        const { placa, tipo, usuario, unidad, anho, marca } = res.data;
+        const { placa, tipo, usuario, unidad, anho } = res.data;
         setVehicles([
           ...vehicles,
           {
@@ -89,7 +103,6 @@ const VehiclesProvider: React.FC = ({ children }) => {
             usuario,
             unidad,
             anho,
-            marca,
           },
         ]);
       });
@@ -99,7 +112,13 @@ const VehiclesProvider: React.FC = ({ children }) => {
     axios
       .put<IVehiclesFromApi>(
         `http://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}`,
-        vehicle
+        vehicle,
+        {
+          headers: {
+            Authorization: `Bearer ${token?.access_token}`,
+            Accept: "application/json",
+          },
+        }
       )
       .then((res) => {
         setVehicles([
@@ -113,7 +132,13 @@ const VehiclesProvider: React.FC = ({ children }) => {
     setLoading(true);
     try {
       axios.delete(
-        `http://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}`
+        `http://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token?.access_token}`,
+            Accept: "application/json",
+          },
+        }
       );
       setLoading(false);
       setVehicles(

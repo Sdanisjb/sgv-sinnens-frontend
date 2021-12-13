@@ -7,7 +7,6 @@ export type IVehiclesFromApi = {
   tipo: string;
   usuario: string;
   unidad: string;
-  marca: string;
   anho: number;
   createdAt: string;
   updatedAt: string;
@@ -19,16 +18,14 @@ export type IVehicles = {
   tipo: string;
   usuario: string;
   unidad: string;
-  marca: string;
   anho: number;
 };
 
 export type IVehiclesToApi = {
-  placa: string;
+  placa?: string;
   tipo: string;
   usuario: string;
   unidad: string;
-  marca: string;
   anho: number;
 };
 
@@ -113,4 +110,46 @@ export type IDocumentsToApi = {
   permiso_mtc: IPermisoMTC;
   soat: ISoat;
   permiso_transp_mercancia: IPermisoMercancia;
+};
+
+export type IDetalle = { descripcion: string; monto: number };
+export type IObservacion = { descripcion: string };
+
+export type IMaintenancesFromApi = {
+  id: number;
+  placa_vehiculo: string;
+  fecha_emision: string;
+  fecha_salida: string;
+  nombre_taller: string;
+  km_actual: number;
+  nro_factura: string;
+  nro_proforma: string | null;
+  detalle: Array<IDetalle>;
+  observaciones: Array<IObservacion>;
+};
+
+export type IMaintenances = {
+  key: string;
+  id: number;
+  placa_vehiculo: string;
+  fecha_emision: string;
+  fecha_salida: string;
+  nombre_taller: string;
+  km_actual: number;
+  nro_factura: string;
+  nro_proforma: string | null;
+  detalle: Array<IDetalle>;
+  observaciones: Array<IObservacion>;
+};
+
+export type IMaintenancesToApi = {
+  placa_vehiculo: string;
+  fecha_emision: string;
+  fecha_salida: string;
+  nombre_taller: string;
+  km_actual: number;
+  nro_factura: string;
+  nro_proforma: string | null;
+  detalle: Array<IDetalle>;
+  observaciones: Array<IObservacion>;
 };

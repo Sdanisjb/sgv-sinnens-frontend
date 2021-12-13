@@ -1,4 +1,4 @@
-import { Button, Checkbox, Divider, Switch, Table } from "antd";
+import { Button, Checkbox, Switch, Table } from "antd";
 import "antd/dist/antd.css";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
@@ -9,9 +9,11 @@ import ReactApexCharts from "react-apexcharts";
 import { useEffect, useState } from "react";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
-//"placa" : "ABC-123", "tipo" : "M1", "usuario" : "SINNENS", "unidad" : "Combi", "anho" : "2010"
+import { ColumnsType } from "antd/lib/table";
+import FilterWords from "../../shared/filters/FilterWords";
+import FilterYears from "../../shared/filters/FilterYears";
 
-const columns = [
+const columns: ColumnsType<IVehicles> = [
   {
     title: "Placa",
     dataIndex: "placa",
@@ -21,43 +23,39 @@ const columns = [
       b.placa.charCodeAt(0) * 10000 +
       (a.placa.charCodeAt(1) * 100 - b.placa.charCodeAt(1) * 100) +
       (a.placa.charCodeAt(2) - b.placa.charCodeAt(2)),
+    filterDropdown: FilterWords,
+    onFilter: (value: string | number | boolean, record: IVehicles) =>
+      record.placa
+        .toString()
+        .toLowerCase()
+        .includes(value.toString().toLowerCase()),
   },
   {
     title: "Año de Fabricación",
     dataIndex: "anho",
     key: "anho",
     sorter: (a: IVehicles, b: IVehicles) => a.anho - b.anho,
-    filters: [
-      {
-        text: "2020-2029",
-        value: 2025,
-      },
-      {
-        text: "2010-2019",
-        value: 2015,
-      },
-      {
-        text: "2000-2009",
-        value: 2005,
-      },
-      {
-        text: "1990-1999",
-        value: 1995,
-      },
-      {
-        text: "1980-1990",
-        value: 1985,
-      },
-    ],
+    filterSearch: true,
+    filtered: true,
+    filterDropdown: FilterYears,
     onFilter: (value: string | number | boolean, record: IVehicles) =>
-      typeof value === "number"
-        ? record.anho >= value - 5 && record.anho < value + 5
-        : false,
+      record.anho.toString().includes(value.toString()),
   },
   {
     title: "Tipo de Unidad",
     dataIndex: "unidad",
     key: "unidad",
+    sorter: (a: IVehicles, b: IVehicles) =>
+      a.placa.charCodeAt(0) * 10000 -
+      b.placa.charCodeAt(0) * 10000 +
+      (a.placa.charCodeAt(1) * 100 - b.placa.charCodeAt(1) * 100) +
+      (a.placa.charCodeAt(2) - b.placa.charCodeAt(2)),
+    filterDropdown: FilterWords,
+    onFilter: (value: string | number | boolean, record: IVehicles) =>
+      record.unidad
+        .toString()
+        .toLowerCase()
+        .includes(value.toString().toLowerCase()),
   },
   {
     title: "Tipo",
@@ -220,7 +218,7 @@ export const Vehicles: React.FC = () => {
           </Checkbox>
           <StyledChartGroup>
             {checkedList.includes("Año") && (
-              <div>
+              <StyledPaper>
                 <h4>Año de Fabricación:</h4>
                 <ReactApexCharts
                   options={{
@@ -234,10 +232,10 @@ export const Vehicles: React.FC = () => {
                   type="donut"
                   width={440}
                 />
-              </div>
+              </StyledPaper>
             )}
             {checkedList.includes("Tipo") && (
-              <div>
+              <StyledPaper>
                 <h4>Tipo:</h4>
                 <ReactApexCharts
                   options={{
@@ -251,10 +249,10 @@ export const Vehicles: React.FC = () => {
                   type="donut"
                   width={440}
                 />
-              </div>
+              </StyledPaper>
             )}
             {checkedList.includes("Tipo de Unidad") && (
-              <div>
+              <StyledPaper>
                 <h4>Tipo de Unidad:</h4>
                 <ReactApexCharts
                   options={{
@@ -268,10 +266,10 @@ export const Vehicles: React.FC = () => {
                   type="donut"
                   width={440}
                 />
-              </div>
+              </StyledPaper>
             )}
             {checkedList.includes("Propietario") && (
-              <div>
+              <StyledPaper>
                 <h4>Propietario:</h4>
                 <ReactApexCharts
                   options={{
@@ -285,7 +283,7 @@ export const Vehicles: React.FC = () => {
                   type="donut"
                   width={440}
                 />
-              </div>
+              </StyledPaper>
             )}
           </StyledChartGroup>
         </>
@@ -344,4 +342,10 @@ const StyledChartGroup = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+`;
+const StyledPaper = styled.div`
+  padding: 24px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  background-color: #fff;
 `;

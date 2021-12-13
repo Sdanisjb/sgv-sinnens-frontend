@@ -6,6 +6,7 @@ import {
   IUsersFromApi,
   IUsersToApi,
 } from "../../../../shared/api";
+import { useAuth } from "../../../../shared/AuthContext/AuthContext";
 
 export interface UsersContextValue {
   users: IUsers[];
@@ -27,27 +28,36 @@ const UsersProvider: React.FC = ({ children }) => {
   const [userSelected, setuserSelected] = React.useState<IUsers | undefined>();
   const [error, setError] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const { token } = useAuth();
 
   React.useEffect(() => {
     async function getUsers() {
       setLoading(true);
       try {
-        axios.get<Array<IUsersFromApi>>(`${config.url}users`).then((res) => {
-          const getUsers: Array<IUsersFromApi> = res.data;
-          console.log(getUsers);
-          setUsers(
-            getUsers.map((element, index) => {
-              const { DNI, nombres, apellidos, email } = element;
-              return {
-                DNI,
-                key: `users-list-item-${DNI}`,
-                nombres,
-                apellidos,
-                email,
-              };
-            })
-          );
-        });
+        console.log(`Bearer ${token?.access_token}`);
+        axios
+          .get<Array<IUsersFromApi>>(`${config.url}users`, {
+            headers: {
+              Authorization: `Bearer ${token?.access_token}`,
+              Accept: "application/json",
+            },
+          })
+          .then((res) => {
+            const getUsers: Array<IUsersFromApi> = res.data;
+            console.log(getUsers);
+            setUsers(
+              getUsers.map((element, index) => {
+                const { DNI, nombres, apellidos, email } = element;
+                return {
+                  DNI,
+                  key: `users-list-item-${DNI}`,
+                  nombres,
+                  apellidos,
+                  email,
+                };
+              })
+            );
+          });
         setLoading(false);
       } catch (err: unknown) {
         console.error(err);
@@ -55,8 +65,9 @@ const UsersProvider: React.FC = ({ children }) => {
         setLoading(false);
       }
     }
+    console.log(token);
     getUsers();
-  }, []);
+  }, [token]);
 
   const selectUser = (User: IUsers | undefined) => {
     setuserSelected(User);

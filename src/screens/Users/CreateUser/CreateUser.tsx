@@ -1,5 +1,5 @@
 /* CU - 11 Registrar Nuevo Empleado */
-import { Button, Col, Input, Row, Form } from "antd";
+import { Button, Col, Input, Row, Form, InputNumber } from "antd";
 import "antd/dist/antd.css";
 import { Paper } from "../../../components/Paper";
 import styled from "styled-components";
@@ -66,7 +66,12 @@ export const CreateUser: React.FC = () => {
                 },
               ]}
             >
-              <Input />
+              <InputNumber
+                min={10000000}
+                max={99999999}
+                style={{ width: "100%" }}
+                maxLength={8}
+              />
             </Form.Item>
           </Col>
           <Col span={12} style={{ padding: "8px 16px" }}>

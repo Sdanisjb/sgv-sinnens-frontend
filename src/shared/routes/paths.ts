@@ -22,6 +22,7 @@ export const paths = {
   },
   maintenances: {
     default: "/maintenances",
+    detail: "/maintenances/detail",
     create: "/maintenances/create",
     update: "/maintenances/update",
     delete: "/maintenances/delete",
@@ -32,5 +33,8 @@ export const paths = {
     mtc: "/documents/mtc",
     soat: "/documents/soat",
     mercancia: "/documents/mercancia",
+  },
+  notifications: {
+    default: "/notifications",
   },
 };

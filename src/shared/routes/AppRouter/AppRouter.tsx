@@ -2,11 +2,13 @@ import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Sidebar } from "../../../components/Sidebar";
 import { Login } from "../../../screens/Login/Login";
+import { Notifications } from "../../../screens/Notifications/Notifications";
 import { AuthProvider } from "../../AuthContext/AuthContext";
 import AppSwitch from "../AppSwitch";
-import { DocumentsRouter } from "../Documents";
+import { DocumentsRouter } from "../DocumentsRouter";
 import { paths } from "../paths";
 import { UsersRouter } from "../UsersRouter";
+import { VehiclesMaintenancesRouter } from "../VehiclesMaintenancesRouter";
 import { VehiclesRouter } from "../VehiclesRouter";
 
 export const AppRouter: React.FC = () => {
@@ -35,21 +37,22 @@ export const AppRouter: React.FC = () => {
           {/*CU-04 Editar Vehículo*/}
           {/* CU-05 Borrar Vehículo */}
           <Route
-            path={paths.vehicles.default}
-            component={() => <VehiclesRouter />}
+            path={[paths.vehicles.default, paths.maintenances.default]}
+            component={() => <VehiclesMaintenancesRouter />}
           />
           <Route path={paths.users.default} component={() => <UsersRouter />} />
           <Route
             path={paths.documents.default}
             component={() => <DocumentsRouter />}
           />
-          {/*<Sidebar headerName="Home">
           <Route
-            exact
-            path={paths.general.home}
-            component={() => <div>Home</div>}
+            path={paths.notifications.default}
+            component={() => (
+              <Sidebar headerName="Actualizar Notificaciones">
+                <Notifications />
+              </Sidebar>
+            )}
           />
-  </Sidebar>*/}
           <Route path={paths.root} component={() => <Login />} />
         </AppSwitch>
       </BrowserRouter>

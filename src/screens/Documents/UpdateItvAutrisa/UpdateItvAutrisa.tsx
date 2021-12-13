@@ -14,23 +14,23 @@ import moment from "moment";
 
 const dateFormat = "YYYY-MM-DD";
 
-export const UpdateSoat: React.FC = () => {
-  const { documentSelected, updateSoat } = useDocuments();
+export const UpdateItvAutrisa: React.FC = () => {
+  const { documentSelected, updateItvAutrisa } = useDocuments();
   const [fields, setFields] = React.useState([
     {
       name: ["soat_venc"],
-      value: moment(documentSelected?.soat_venc),
+      value: moment(documentSelected?.permiso_autrisa_venc || undefined),
     },
     {
       name: ["soat_renovacion"],
-      value: moment(documentSelected?.soat_renovacion),
+      value: moment(documentSelected?.permiso_autrisa_renovacion || undefined),
     },
   ]);
   const history = useHistory();
 
   const onSend = (event: { soat_renovacion: string; soat_venc: string }) => {
     if (documentSelected)
-      updateSoat(
+      updateItvAutrisa(
         documentSelected.placa,
         event.soat_renovacion,
         event.soat_venc

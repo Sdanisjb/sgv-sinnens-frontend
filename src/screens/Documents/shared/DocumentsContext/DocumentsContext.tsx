@@ -3,6 +3,7 @@
 /* CU - 16 Actualizar ITV MTC*/
 /* CU - 17 Actualizar Permiso de Transporte de Mercancía*/
 import axios from "axios";
+import moment from "moment";
 import React from "react";
 import {
   config,
@@ -10,6 +11,7 @@ import {
   IDocumentsFromApi,
   IDocumentsToApi,
 } from "../../../../shared/api";
+import { useAuth } from "../../../../shared/AuthContext/AuthContext";
 
 //import { User } from '../../shared/api'
 //import { client } from '../../shared/client'
@@ -20,10 +22,24 @@ export interface DocumentsContextValue {
   createDocument: (documentsel: IDocumentsToApi) => void;
   updateSoat: (
     placa: string,
-    fecha_emision: string | null,
+    fecha_renovacion: string | null,
     fecha_venc: string | null
   ) => void;
-  deleteDocument: (placa: string) => void;
+  updateItvMtc: (
+    placa: string,
+    fecha_renovacion: string | null,
+    fecha_venc: string | null
+  ) => void;
+  updateItvAutrisa: (
+    placa: string,
+    fecha_renovacion: string | null,
+    fecha_venc: string | null
+  ) => void;
+  updateMercancia: (
+    placa: string,
+    fecha_renovacion: string | null,
+    fecha_venc: string | null
+  ) => void;
   selectDocument: (documentsel: IDocuments | undefined) => void;
   loading: boolean;
   error: boolean;
@@ -40,6 +56,7 @@ const DocumentsProvider: React.FC = ({ children }) => {
   >();
   const [error, setError] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const { token } = useAuth();
 
   React.useEffect(() => {
     async function getDocuments() {
@@ -47,11 +64,16 @@ const DocumentsProvider: React.FC = ({ children }) => {
       try {
         axios
           .get<{ data: Array<IDocumentsFromApi> }>(
-            `${config.url}vehicles_and_permissions`
+            `${config.url}vehicles_and_permissions`,
+            {
+              headers: {
+                Authorization: `Bearer ${token?.access_token}`,
+                Accept: "application/json",
+              },
+            }
           )
           .then((res) => {
             const getDocuments: Array<IDocumentsFromApi> = res.data.data;
-            console.log(getDocuments);
             setDocuments(
               getDocuments.map((element, index) => {
                 const {
@@ -99,7 +121,7 @@ const DocumentsProvider: React.FC = ({ children }) => {
       }
     }
     getDocuments();
-  }, []);
+  }, [token]);
 
   const selectDocument = (document: IDocuments | undefined) => {
     setDocumentSelected(document);
@@ -135,69 +157,35 @@ const DocumentsProvider: React.FC = ({ children }) => {
 
   const updateSoat = (
     placa: string,
-    fecha_emision: string | null,
+    fecha_renovacion: string | null,
     fecha_venc: string | null
   ) => {
-    /*const sendDocument: IDocumentsToApi = {
-      placa: document.placa,
-      usuario: document.usuario,
-      tipo: document.tipo,
-      unidad: document.unidad,
-      anho: document.anho,
-      permiso_autrisa:
-        document.permiso_autrisa_venc || document.permiso_autrisa_renovacion
-          ? {
-              fecha_renovacion: document.permiso_autrisa_renovacion,
-              fecha_venc: document.permiso_autrisa_venc,
-            }
-          : null,
-      permiso_mtc:
-        document.permiso_mtc_venc || document.permiso_mtc_renovacion
-          ? {
-              fecha_renovacion: document.permiso_mtc_renovacion,
-              fecha_venc: document.permiso_mtc_venc,
-            }
-          : null,
-      soat:
-        document.soat_venc || document.soat_renovacion
-          ? {
-              fecha_renovacion: document.soat_renovacion,
-              fecha_venc: document.soat_venc,
-            }
-          : null,
-      permiso_transp_mercancia:
-        document.permiso_transp_mercancia_venc ||
-        document.permiso_transp_mercancia_renovacion
-          ? {
-              fecha_renovacion: document.permiso_transp_mercancia_renovacion,
-              fecha_venc: document.permiso_transp_mercancia_venc,
-            }
-          : null,
-    };*/
-    const config = {
-      headers: {
-        Accept: "application/json",
-      },
-    };
     if (documentSelected?.soat_venc || documentSelected?.soat_renovacion) {
+      console.log("put");
       axios
         .put(
-          `https://quiet-eyrie-82714.herokuapp.com/api/soat/${placa}/`,
+          `https://quiet-eyrie-82714.herokuapp.com/api/soat/${placa}`,
           {
-            fecha_emision,
+            fecha_renovacion,
             fecha_venc,
           },
-          config
+          {
+            headers: {
+              Authorization: `Bearer ${token?.access_token}`,
+              Accept: "application/json",
+            },
+          }
         )
         .then((res) => {
+          console.log(res);
           setDocuments([
             ...documents.filter(
               (documentValue) => documentValue.placa !== placa
             ),
             {
               ...documentSelected,
-              soat_renovacion: fecha_emision,
-              soat_venc: fecha_venc,
+              soat_renovacion: moment(fecha_renovacion).format("YYYY-MM-DD"),
+              soat_venc: moment(fecha_venc).format("YYYY-MM-DD"),
             },
           ]);
           setDocumentSelected(undefined);
@@ -206,8 +194,13 @@ const DocumentsProvider: React.FC = ({ children }) => {
       axios
         .post(
           `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}/soat`,
-          { fecha_emision, fecha_venc },
-          config
+          { fecha_renovacion, fecha_venc },
+          {
+            headers: {
+              Authorization: `Bearer ${token?.access_token}`,
+              Accept: "application/json",
+            },
+          }
         )
         .then((res) => {
           setDocuments([
@@ -220,7 +213,7 @@ const DocumentsProvider: React.FC = ({ children }) => {
               ...documents,
               {
                 ...documentSelected,
-                soat_renovacion: fecha_emision,
+                soat_renovacion: fecha_renovacion,
                 soat_venc: fecha_venc,
               },
             ]);
@@ -228,23 +221,221 @@ const DocumentsProvider: React.FC = ({ children }) => {
         });
     }
   };
-  const deleteDocument = (placa: string) => {
-    /*setLoading(true);
-    try {
-      axios.delete(
-        `https://quiet-eyrie-82714.herokuapp.com/api/Documents/${placa}`
-      );
-      setLoading(false);
-      setDocuments(
-        documents.filter((documentValue) => documentValue.placa !== placa)
-      );
-      setDocumentSelected(undefined);
-    } catch (err: unknown) {
-      console.error(err);
-      setError(true);
-      setLoading(false);
-      setDocumentSelected(undefined);
-    }*/
+
+  const updateItvMtc = (
+    placa: string,
+    fecha_renovacion: string | null,
+    fecha_venc: string | null
+  ) => {
+    if (
+      documentSelected?.permiso_mtc_venc ||
+      documentSelected?.permiso_mtc_renovacion
+    ) {
+      console.log("put");
+      axios
+        .put(
+          `https://quiet-eyrie-82714.herokuapp.com/api/permiso_mtc/${placa}`,
+          {
+            fecha_renovacion,
+            fecha_venc,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token?.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          setDocuments([
+            ...documents.filter(
+              (documentValue) => documentValue.placa !== placa
+            ),
+            {
+              ...documentSelected,
+              soat_renovacion: moment(fecha_renovacion).format("YYYY-MM-DD"),
+              soat_venc: moment(fecha_venc).format("YYYY-MM-DD"),
+            },
+          ]);
+          setDocumentSelected(undefined);
+        });
+    } else {
+      console.log("post");
+      axios
+        .post(
+          `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}/permiso_mtc`,
+          { fecha_renovacion, fecha_venc },
+          {
+            headers: {
+              Authorization: `Bearer ${token?.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          setDocuments([
+            ...documents.filter(
+              (documentValue) => documentValue.placa !== placa
+            ),
+          ]);
+          if (documentSelected)
+            setDocuments([
+              ...documents,
+              {
+                ...documentSelected,
+                soat_renovacion: moment(fecha_renovacion).format("YYYY-MM-DD"),
+                soat_venc: moment(fecha_venc).format("YYYY-MM-DD"),
+              },
+            ]);
+          setDocumentSelected(undefined);
+        });
+    }
+  };
+
+  const updateItvAutrisa = (
+    placa: string,
+    fecha_renovacion: string | null,
+    fecha_venc: string | null
+  ) => {
+    if (
+      documentSelected?.permiso_autrisa_venc ||
+      documentSelected?.permiso_autrisa_renovacion
+    ) {
+      console.log("put");
+      axios
+        .put(
+          `https://quiet-eyrie-82714.herokuapp.com/api/permiso_autrisa/${placa}`,
+          {
+            fecha_renovacion,
+            fecha_venc,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token?.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          setDocuments([
+            ...documents.filter(
+              (documentValue) => documentValue.placa !== placa
+            ),
+            {
+              ...documentSelected,
+              permiso_autrisa_renovacion:
+                moment(fecha_renovacion).format("YYYY-MM-DD"),
+              permiso_autrisa_venc: moment(fecha_venc).format("YYYY-MM-DD"),
+            },
+          ]);
+          setDocumentSelected(undefined);
+        });
+    } else {
+      axios
+        .post(
+          `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}/permiso_autrisa`,
+          { fecha_renovacion, fecha_venc },
+          {
+            headers: {
+              Authorization: `Bearer ${token?.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          setDocuments([
+            ...documents.filter(
+              (documentValue) => documentValue.placa !== placa
+            ),
+          ]);
+          if (documentSelected)
+            setDocuments([
+              ...documents,
+              {
+                ...documentSelected,
+                permiso_autrisa_renovacion:
+                  moment(fecha_renovacion).format("YYYY-MM-DD"),
+                permiso_autrisa_venc: moment(fecha_venc).format("YYYY-MM-DD"),
+              },
+            ]);
+          setDocumentSelected(undefined);
+        });
+    }
+  };
+  const updateMercancia = (
+    placa: string,
+    fecha_renovacion: string | null,
+    fecha_venc: string | null
+  ) => {
+    if (
+      documentSelected?.permiso_transp_mercancia_venc ||
+      documentSelected?.permiso_transp_mercancia_renovacion
+    ) {
+      console.log("put");
+      axios
+        .put(
+          `https://quiet-eyrie-82714.herokuapp.com/api/permiso_transp_mercancia/${placa}`,
+          {
+            fecha_renovacion,
+            fecha_venc,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token?.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          setDocuments([
+            ...documents.filter(
+              (documentValue) => documentValue.placa !== placa
+            ),
+            {
+              ...documentSelected,
+              permiso_transp_mercancia_renovacion:
+                moment(fecha_renovacion).format("YYYY-MM-DD"),
+              permiso_transp_mercancia_venc:
+                moment(fecha_venc).format("YYYY-MM-DD"),
+            },
+          ]);
+          setDocumentSelected(undefined);
+        });
+    } else {
+      axios
+        .post(
+          `https://quiet-eyrie-82714.herokuapp.com/api/vehicles/${placa}/permiso_transp_mercancia`,
+          { fecha_renovacion, fecha_venc },
+          {
+            headers: {
+              Authorization: `Bearer ${token?.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          setDocuments([
+            ...documents.filter(
+              (documentValue) => documentValue.placa !== placa
+            ),
+          ]);
+          if (documentSelected)
+            setDocuments([
+              ...documents,
+              {
+                ...documentSelected,
+                permiso_transp_mercancia_renovacion:
+                  moment(fecha_renovacion).format("YYYY-MM-DD"),
+                permiso_transp_mercancia_venc:
+                  moment(fecha_venc).format("YYYY-MM-DD"),
+              },
+            ]);
+          setDocumentSelected(undefined);
+        });
+    }
   };
 
   return (
@@ -257,7 +448,9 @@ const DocumentsProvider: React.FC = ({ children }) => {
         selectDocument,
         createDocument,
         updateSoat,
-        deleteDocument,
+        updateItvMtc,
+        updateItvAutrisa,
+        updateMercancia,
       }}
     >
       {children}

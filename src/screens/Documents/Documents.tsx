@@ -21,7 +21,6 @@ const renderCellWColor = (text: string) => {
   const daysUntil = Math.floor(
     (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
   );
-  console.log(daysUntil);
   return {
     props: {
       style: {

@@ -1,6 +1,3 @@
-/* CU - 14 Actualizar SOAT*/
-/* CU - 15 Actualizar ITV Autrisa*/
-/* CU - 16 Actualizar ITV MTC*/
 /* CU - 17 Actualizar Permiso de Transporte de Mercancía*/
 import React from "react";
 import { Button, Col, Row, Form, DatePicker } from "antd";
@@ -14,32 +11,39 @@ import moment from "moment";
 
 const dateFormat = "YYYY-MM-DD";
 
-export const UpdateSoat: React.FC = () => {
-  const { documentSelected, updateSoat } = useDocuments();
+export const UpdateMercancia: React.FC = () => {
+  const { documentSelected, updateMercancia } = useDocuments();
   const [fields, setFields] = React.useState([
     {
-      name: ["soat_venc"],
-      value: moment(documentSelected?.soat_venc),
+      name: ["permiso_transp_mercancia_venc"],
+      value: moment(
+        documentSelected?.permiso_transp_mercancia_venc || undefined
+      ),
     },
     {
-      name: ["soat_renovacion"],
-      value: moment(documentSelected?.soat_renovacion),
+      name: ["permiso_transp_mercancia_renovacion"],
+      value: moment(
+        documentSelected?.permiso_transp_mercancia_renovacion || undefined
+      ),
     },
   ]);
   const history = useHistory();
 
-  const onSend = (event: { soat_renovacion: string; soat_venc: string }) => {
+  const onSend = (event: {
+    permiso_transp_mercancia_renovacion: string;
+    permiso_transp_mercancia_venc: string;
+  }) => {
     if (documentSelected)
-      updateSoat(
+      updateMercancia(
         documentSelected.placa,
-        event.soat_renovacion,
-        event.soat_venc
+        event.permiso_transp_mercancia_renovacion,
+        event.permiso_transp_mercancia_venc
       );
     history.push("/documents");
   };
   return (
     <Paper>
-      <h1>Actualizar Información de SOAT</h1>
+      <h1>Actualizar Información de Permiso de Mercancia</h1>
       <Form
         name="basic"
         layout="vertical"
@@ -52,14 +56,20 @@ export const UpdateSoat: React.FC = () => {
       >
         <Row>
           <Col span={12} style={{ padding: "8px 16px" }}>
-            <Form.Item label="Fecha de Vencimiento" name="soat_venc">
+            <Form.Item
+              label="Fecha de Vencimiento"
+              name="permiso_transp_mercancia_venc"
+            >
               <DatePicker style={{ width: "100%" }} format={dateFormat} />
             </Form.Item>
           </Col>
         </Row>
         <Row>
           <Col span={12} style={{ padding: "8px 16px" }}>
-            <Form.Item label="Fecha de Renovación" name="soat_renovacion">
+            <Form.Item
+              label="Fecha de Renovación"
+              name="permiso_transp_mercancia_renovacion"
+            >
               <DatePicker style={{ width: "100%" }} format={dateFormat} />
             </Form.Item>
           </Col>

@@ -14,32 +14,39 @@ import moment from "moment";
 
 const dateFormat = "YYYY-MM-DD";
 
-export const UpdateSoat: React.FC = () => {
-  const { documentSelected, updateSoat } = useDocuments();
+export const UpdateItvMtc: React.FC = () => {
+  const { documentSelected, updateItvMtc } = useDocuments();
   const [fields, setFields] = React.useState([
     {
-      name: ["soat_venc"],
-      value: moment(documentSelected?.soat_venc),
+      name: ["permiso_mtc_venc"],
+      value:
+        documentSelected?.permiso_mtc_venc &&
+        moment(documentSelected.permiso_mtc_venc || undefined),
     },
     {
-      name: ["soat_renovacion"],
-      value: moment(documentSelected?.soat_renovacion),
+      name: ["permiso_mtc_renovacion"],
+      value:
+        documentSelected?.permiso_mtc_renovacion &&
+        moment(documentSelected.permiso_mtc_renovacion || undefined),
     },
   ]);
   const history = useHistory();
 
-  const onSend = (event: { soat_renovacion: string; soat_venc: string }) => {
+  const onSend = (event: {
+    permiso_mtc_renovacion: string;
+    permiso_mtc_venc: string;
+  }) => {
     if (documentSelected)
-      updateSoat(
+      updateItvMtc(
         documentSelected.placa,
-        event.soat_renovacion,
-        event.soat_venc
+        event.permiso_mtc_renovacion,
+        event.permiso_mtc_venc
       );
     history.push("/documents");
   };
   return (
     <Paper>
-      <h1>Actualizar Información de SOAT</h1>
+      <h1>Actualizar Información de Permiso del MTC</h1>
       <Form
         name="basic"
         layout="vertical"
@@ -52,14 +59,17 @@ export const UpdateSoat: React.FC = () => {
       >
         <Row>
           <Col span={12} style={{ padding: "8px 16px" }}>
-            <Form.Item label="Fecha de Vencimiento" name="soat_venc">
+            <Form.Item label="Fecha de Vencimiento" name="permiso_mtc_venc">
               <DatePicker style={{ width: "100%" }} format={dateFormat} />
             </Form.Item>
           </Col>
         </Row>
         <Row>
           <Col span={12} style={{ padding: "8px 16px" }}>
-            <Form.Item label="Fecha de Renovación" name="soat_renovacion">
+            <Form.Item
+              label="Fecha de Renovación"
+              name="permiso_mtc_renovacion"
+            >
               <DatePicker style={{ width: "100%" }} format={dateFormat} />
             </Form.Item>
           </Col>
