@@ -1,3 +1,16 @@
+/* 
+Contexto de Vehiculos
+Implementacion de la clase controlador vehiculo
+Atributos:
+- vehicles
+- vehicleSelected
+Metodos:
+- selectvehicle
+- createvehicle
+- updatevehicle
+- deletevehicle
+*/
+
 import axios from "axios";
 import React from "react";
 import {
@@ -6,9 +19,6 @@ import {
   IVehiclesToApi,
 } from "../../../../shared/api";
 import { useAuth } from "../../../../shared/AuthContext/AuthContext";
-
-//import { User } from '../../shared/api'
-//import { client } from '../../shared/client'
 
 export interface VehiclesContextValue {
   vehicles: IVehicles[];

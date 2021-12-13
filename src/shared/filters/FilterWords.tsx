@@ -1,3 +1,10 @@
+/* 
+Componente FilterWords
+Componente de renderizado para ser usado como filtro para columnas dentro de una tabla
+Acepta todos los parametros/props descritos en FilterDropdownProps
+Retorna un renderizado de box con un search input
+*/
+
 import { Button, Divider, Input } from "antd";
 import "antd/dist/antd.css";
 

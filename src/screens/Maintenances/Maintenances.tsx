@@ -1,3 +1,12 @@
+/* React-Component Maintenances
+Implementacion de la clase Panel Registro Mantenimiento
+Por defecto retorna el renderizado de la pantalla Maintenances
+Interactua con el controlador Registro Mantenimiento para poder acceder a los metodos:
+- getMaintenances
+- createMaintenance
+- updateMaintenance
+- deleteMaintenance
+*/
 import { Button, Checkbox, Divider, Switch, Table } from "antd";
 import "antd/dist/antd.css";
 import styled from "styled-components";

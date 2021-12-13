@@ -1,3 +1,13 @@
+/* React-Component Vehicles
+Implementacion de la clase Panel Vehiculo
+Por defecto retorna el renderizado de la pantalla Vehicles
+Interactua con el controlador Vehiculo para poder acceder a los metodos:
+- getVehicles
+- createVehicle
+- updateVehicle
+- deleteVehicle
+*/
+
 import { Button, Checkbox, Switch, Table } from "antd";
 import "antd/dist/antd.css";
 import styled from "styled-components";

@@ -1,3 +1,11 @@
+/* 
+Router Global
+Implementacion de la clase controlador navegacion
+Retorna el componente segun la ruta lo requiera y optimiza el renderizado
+Metodos:
+- Route
+*/
+
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Sidebar } from "../../../components/Sidebar";

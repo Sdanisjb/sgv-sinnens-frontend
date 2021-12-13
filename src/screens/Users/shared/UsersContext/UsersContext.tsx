@@ -1,3 +1,16 @@
+/* 
+Contexto de Usuarios
+Implementacion de la clase controlador usuario
+Atributos:
+- users
+- userSelected
+Metodos:
+- selectUser
+- createUser
+- updateUser
+- deleteUser
+*/
+
 import axios from "axios";
 import React from "react";
 import {

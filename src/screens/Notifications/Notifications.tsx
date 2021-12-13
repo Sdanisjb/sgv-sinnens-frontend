@@ -1,7 +1,11 @@
-/* CU - 14 Actualizar SOAT*/
-/* CU - 15 Actualizar ITV Autrisa*/
-/* CU - 16 Actualizar ITV MTC*/
-/* CU - 17 Actualizar Permiso de Transporte de Mercancía*/
+/* React-Component Notifications
+Implementacion de la clase Panel Notificaciones
+Por defecto retorna el renderizado de la pantalla Notifications
+Interactua con el controlador Notificacion para poder acceder a los metodos:
+- getNotification
+- updateNotification
+*/
+
 import React from "react";
 import { Button, Col, Row, Form, InputNumber } from "antd";
 import "antd/dist/antd.css";

@@ -1,3 +1,11 @@
+/* 
+Componente FilterDni
+Componente de renderizado para ser usado como filtro para columnas de tipo 
+numerico con un maximo de 4 digitos dentro de una tabla
+Acepta todos los parametros/props descritos en FilterDropdownProps
+Retorna un renderizado de box con un search input
+*/
+
 import { Button, Divider, InputNumber } from "antd";
 import "antd/dist/antd.css";
 import { FilterDropdownProps } from "antd/lib/table/interface";

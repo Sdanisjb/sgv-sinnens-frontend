@@ -1,3 +1,16 @@
+/* 
+Contexto de Registros de Mantenimiento
+Implementacion de la clase controlador Registro de Mantenimiento
+Atributos:
+- maintenances
+- maintenanceSelected
+Metodos:
+- selectmaintenance
+- createmaintenance
+- updatemaintenance
+- deletemaintenance
+*/
+
 import axios from "axios";
 import React from "react";
 import {
@@ -7,9 +20,6 @@ import {
 } from "../../../../shared/api";
 import { useAuth } from "../../../../shared/AuthContext/AuthContext";
 import { useVehicles } from "../../../Vehicles/shared/VehiclesContext/VehiclesContext";
-
-//import { User } from '../../shared/api'
-//import { client } from '../../shared/client'
 
 export interface MaintenancesContextValue {
   maintenances: IMaintenances[];

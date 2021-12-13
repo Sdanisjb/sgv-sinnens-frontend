@@ -1,4 +1,9 @@
 /*CU - 10 Loguearse en el sistema*/
+/* React-Component Login
+Implementacion de la clase Panel Login
+Por defecto retorna el renderizado de la pantalla Login
+Interactua con el controlador Login para poder acceder al metodo login/verificarLogin de este
+*/
 import { Button, Col, Input, Row, Form } from "antd";
 import "antd/dist/antd.css";
 import { Paper } from "../../components/Paper";

@@ -2,6 +2,16 @@
 /* CU - 15 Actualizar ITV Autrisa*/
 /* CU - 16 Actualizar ITV MTC*/
 /* CU - 17 Actualizar Permiso de Transporte de Mercancía*/
+/* React-Component Documents
+Implementacion de la clase Panel Documentacion
+Por defecto retorna el renderizado de la pantalla Documents
+Interactua con el controlador Documentacion para poder acceder a los metodos:
+- getDocuments
+- updateSoat
+- updateItvMtc
+- updateItvAutrisa
+- updateMercancia
+*/
 import { Button, Table } from "antd";
 import "antd/dist/antd.css";
 import styled from "styled-components";

@@ -2,6 +2,20 @@
 /* CU - 15 Actualizar ITV Autrisa*/
 /* CU - 16 Actualizar ITV MTC*/
 /* CU - 17 Actualizar Permiso de Transporte de Mercancía*/
+
+/* 
+Contexto de Documentacion
+Implementacion de la clase controlador Documentacion
+Atributos:
+- documents
+- documentSelected
+Metodos:
+- selectdocument
+- createdocument
+- updatedocument
+- deletedocument
+*/
+
 import axios from "axios";
 import moment from "moment";
 import React from "react";

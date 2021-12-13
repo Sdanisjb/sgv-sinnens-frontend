@@ -1,3 +1,14 @@
+/* 
+Contexto de Autenticacion
+Implementacion de la clase controlador autenticador
+Atributos:
+- email
+- token
+Metodos:
+- login
+- logout
+*/
+
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router";

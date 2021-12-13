@@ -1,3 +1,13 @@
+/* React-Component Users
+Implementacion de la clase Panel Usuario
+Por defecto retorna el renderizado de la pantalla Users
+Interactua con el controlador Usuario para poder acceder a los metodos:
+- getUsers
+- createUser
+- updateUser
+- deleteUser
+*/
+
 import { Button, Table } from "antd";
 import "antd/dist/antd.css";
 import styled from "styled-components";
